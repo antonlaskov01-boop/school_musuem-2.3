@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школьный электронный музей "Великая Отечественная война и СВО"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Библиотека для генерации QR‑кодов -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <style>
+        /* =========== ГЛОБАЛЬНЫЕ СТИЛИ И СБРОС =========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* =========== CSS ПЕРЕМЕННЫЕ =========== */
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #D4AF37;
+            --dark-color: #1a1a1a;
+            --light-color: #f4f4f4;
+            --gray-color: #333;
+            --soviet-color: #8B0000;
+            --german-color: #333;
+            --american-color: #00308F;
+            --british-color: #00247D;
+            --japanese-color: #BC002D;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--dark-color), var(--primary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .logo i {
+                color: var(--secondary-color);
+                font-size: 2rem;
+            }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .logo .subtitle {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-top: 2px;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+            nav ul li {
+                margin-left: 1.5rem;
+            }
+
+                nav ul li a {
+                    color: white;
+                    text-decoration: none;
+                    font-weight: 500;
+                    padding: 0.5rem 0.8rem;
+                    border-radius: 4px;
+                    transition: all 0.3s ease;
+                }
+
+                    nav ul li a:hover,
+                    nav ul li a.active {
+                        background-color: var(--primary-color);
+                        color: var(--secondary-color);
+                    }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://sun9-29.userapi.com/s/v1/ig2/J0m_oVZRtx8bR5RfWzVcaOErzONsFHMW1rCs8WN1Hxgz1fi7XG0lVfQI3J69jXl4fCHOmC3My9elgfumCyUazF-0.jpg?quality=95&as=32x15,48x22,72x33,108x50,160x74,240x111,360x166,480x222,540x249,640x295,720x332,1080x499,1280x591,1440x665,2560x1182&from=bu&cs=2560x0');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            margin-bottom: 3rem;
+        }
+
+            .hero h2 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+                max-width: 800px;
+                margin: 0 auto 2rem;
+                color: #e0e0e0;
+            }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .section-title:after {
+                content: '';
+                position: absolute;
+                width: 80px;
+                height: 3px;
+                background-color: var(--primary-color);
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+        .museum-history {
+            background-color: #f0f0f0;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .history-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .history-text h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .history-text p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .history-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .audio-guide-container {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .audio-guide-title {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .audio-guide-btn {
+            background: linear-gradient(to right, var(--primary-color), #a80000);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(139, 0, 0, 0.2);
+            margin-bottom: 1rem;
+        }
+
+            .audio-guide-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(139, 0, 0, 0.3);
+                background: linear-gradient(to right, #a80000, var(--primary-color));
+            }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .audio-control-btn {
+            background-color: #f0f0f0;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+            .audio-control-btn:hover {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+        .audio-progress-container {
+            flex-grow: 1;
+            max-width: 300px;
+        }
+
+        .audio-progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .audio-progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .audio-time {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .audio-note {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .war-stages {
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+            .timeline:before {
+                content: '';
+                position: absolute;
+                width: 4px;
+                background-color: var(--primary-color);
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+            .timeline-item:nth-child(odd) {
+                left: 0;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 50%;
+            }
+
+        .timeline-content {
+            padding: 25px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .timeline-year {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            top: 15px;
+            right: -12px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even):after {
+            left: -12px;
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .filter-btn:hover,
+            .filter-btn.active {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .exhibit {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: none;
+            position: relative;
+        }
+
+            .exhibit.show {
+                display: block;
+            }
+
+            .exhibit:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            }
+
+        .exhibit-img {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+            .exhibit-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s ease;
+            }
+
+        .exhibit:hover .exhibit-img img {
+            transform: scale(1.05);
+        }
+
+        .country-flag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+            .country-flag.soviet {
+                background-color: var(--soviet-color);
+            }
+
+            .country-flag.german {
+                background-color: var(--german-color);
+            }
+
+            .country-flag.american {
+                background-color: var(--american-color);
+            }
+
+            .country-flag.british {
+                background-color: var(--british-color);
+            }
+
+            .country-flag.japanese {
+                background-color: var(--japanese-color);
+            }
+
+        .exhibit-info {
+            padding: 1.5rem;
+        }
+
+            .exhibit-info h3 {
+                color: var(--primary-color);
+                margin-bottom: 0.8rem;
+                font-size: 1.4rem;
+            }
+
+        .exhibit-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--gray-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .spec-value {
+            color: var(--dark-color);
+        }
+
+        .exhibit-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background-color: #f0f0f0;
+            color: var(--dark-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+            .tag.soviet {
+                background-color: rgba(139, 0, 0, 0.1);
+                color: var(--soviet-color);
+            }
+
+            .tag.german {
+                background-color: rgba(51, 51, 51, 0.1);
+                color: var(--german-color);
+            }
+
+            .tag.american {
+                background-color: rgba(0, 48, 143, 0.1);
+                color: var(--american-color);
+            }
+
+            .tag.british {
+                background-color: rgba(0, 36, 125, 0.1);
+                color: var(--british-color);
+            }
+
+            .tag.japanese {
+                background-color: rgba(188, 0, 45, 0.1);
+                color: var(--japanese-color);
+            }
+
+            .tag.fighter {
+                background-color: rgba(0, 100, 0, 0.1);
+                color: #006400;
+            }
+
+            .tag.tank {
+                background-color: rgba(0, 0, 139, 0.1);
+                color: #00008B;
+            }
+
+            .tag.bomber {
+                background-color: rgba(139, 0, 139, 0.1);
+                color: #8B008B;
+            }
+
+            .tag.transport {
+                background-color: rgba(218, 165, 32, 0.1);
+                color: #DAA520;
+            }
+
+            .tag.artillery {
+                background-color: rgba(165, 42, 42, 0.1);
+                color: #A52A2A;
+            }
+
+        /* =========== СТИЛИ ДЛЯ QR-КОДА НА КАРТОЧКЕ =========== */
+        .exhibit-qr-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 6px;
+            padding: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 15;
+            transition: transform 0.2s ease;
+        }
+
+            .exhibit-qr-container:hover {
+                transform: scale(1.05);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+        .exhibit-qr-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .exhibit-qr-container {
+                width: 55px;
+                height: 55px;
+                bottom: 8px;
+                right: 8px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .exhibit-qr-container {
+                width: 45px;
+                height: 45px;
+                bottom: 5px;
+                right: 5px;
+            }
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: white;
+            max-width: 1000px;
+            margin: 30px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-header {
+            background: linear-gradient(to right, var(--dark-color), var(--primary-color));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .modal-header h3 {
+                color: white;
+                font-size: 1.8rem;
+                margin: 0;
+            }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-body {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .modal-image {
+            grid-column: 1;
+        }
+
+            .modal-image img {
+                width: 100%;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+        .modal-details {
+            grid-column: 2;
+        }
+
+        .modal-specs h4,
+        .modal-crew h4,
+        .modal-culture h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .modal-crew,
+        .modal-culture {
+            margin-bottom: 1.5rem;
+        }
+
+        .crew-list,
+        .culture-list {
+            list-style-type: none;
+        }
+
+            .crew-list li,
+            .culture-list li {
+                margin-bottom: 0.8rem;
+                padding-left: 1.5rem;
+                position: relative;
+            }
+
+                .crew-list li:before,
+                .culture-list li:before {
+                    content: "•";
+                    color: var(--primary-color);
+                    position: absolute;
+                    left: 0;
+                    font-size: 1.2rem;
+                }
+
+        .exhibit-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 10;
+            opacity: 0;
+        }
+
+        .exhibit:hover .exhibit-link {
+            opacity: 1;
+        }
+
+        .exhibit-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .exhibit-link i {
+            font-size: 1rem;
+        }
+
+        .modal-share-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+            .modal-share-link:hover {
+                background-color: var(--primary-color);
+                color: white;
+                transform: scale(1.1);
+            }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-column p,
+        .footer-column a {
+            color: #bbb;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+            .footer-column a:hover {
+                color: var(--secondary-color);
+            }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 992px) {
+            .modal-body {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .modal-image,
+            .modal-details {
+                grid-column: 1;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+
+            .history-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .timeline:before {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+                .timeline-item:nth-child(even) {
+                    left: 0;
+                }
+
+                .timeline-item:after {
+                    left: 21px;
+                }
+
+                .timeline-item:nth-child(even):after {
+                    left: 21px;
+                }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+                nav ul li {
+                    margin: 0.3rem;
+                }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .audio-controls {
+                flex-wrap: wrap;
+            }
+
+            .audio-progress-container {
+                order: 3;
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+
+            .hero {
+                padding: 3rem 0;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .exhibit-specs {
+                grid-template-columns: 1fr;
+            }
+
+            .spec-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .exhibit-audio-player {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(to right, rgba(139, 0, 0, 0.05), rgba(212, 175, 55, 0.05));
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .audio-player-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.8rem;
+        }
+
+            .audio-player-header h4 {
+                color: var(--primary-color);
+                font-size: 1.1rem;
+                margin: 0;
+            }
+
+        .exhibit-audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .exhibit-audio-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background-color: white;
+            color: var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+            .exhibit-audio-btn:hover {
+                background-color: var(--primary-color);
+                color: white;
+                transform: scale(1.05);
+            }
+
+        .exhibit-audio-progress {
+            flex-grow: 1;
+        }
+
+        .exhibit-audio-progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 4px;
+        }
+
+        .exhibit-audio-progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .exhibit-audio-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .audio-note-small {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        .exhibit-audio-indicator {
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            background: rgba(139, 0, 0, 0.8);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            z-index: 5;
+        }
+
+        .tts-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .tts-indicator.show {
+                display: flex;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-landmark"></i>
+                <div class="logo-text">
+                    <h1>Школьный электронный музей <span>"ВОВ и СВО"</span></h1>
+                    <div class="subtitle">История, техника, подвиги</div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Главная</a></li>
+                    <li><a href="#history">О музее</a></li>
+                    <li><a href="#stages">Этапы войны</a></li>
+                    <li><a href="#gallery">Экспонаты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Школьный электронный музей "Великая Отечественная война и СВО"</h2>
+            <p>Сохраняя память о героях, изучая историю, воспитывая патриотов. Виртуальная экспозиция создана учениками и учителями нашей школы.</p>
+        </div>
+    </section>
+
+    <section class="museum-history" id="history">
+        <div class="container">
+            <h2 class="section-title">История нашего музея</h2>
+            <div class="history-content">
+                <div class="history-text">
+                    <h3>Музей, созданный учениками</h3>
+                    <p>Наш школьный музей был основан в 2005 году по инициативе учителей истории и группы увлеченных учеников. Первые экспонаты — модели военной техники — собирались собственными руками из подручных материалов.</p>
+                    <p>За почти 20 лет существования музей значительно расширился. Сегодня в нашей коллекции более 50 моделей техники времен Великой Отечественной войны.</p>
+                    <p>Особенностью музея является то, что большинство экспонатов созданы руками учеников школы. Каждая модель сопровождается исторической справкой, которую готовят учащиеся в рамках исследовательских проектов.</p>
+                    <p>Музей регулярно пополняется новыми экспонатами, сохраняя память о героях войны.</p>
+                </div>
+                <div class="history-image">
+                    <img src="https://sun9-61.userapi.com/s/v1/ig2/plSza1uqv0GRCzqcPkoD6fUqLtn4xPqO1tfVNLxfzwIk-lfMo1fldFvC4gof3wv8Hk3tw_JCE5VCNS68P6_HiEyg.jpg?quality=95&as=32x15,48x22,72x33,108x50,160x74,240x111,360x166,480x222,540x249,640x295,720x332,1080x499,1280x591,1440x665,2560x1182&from=bu&cs=2560x0" alt="Школьный музей">
+                </div>
+            </div>
+            <div class="audio-guide-container">
+                <h3 class="audio-guide-title">
+                    <i class="fas fa-headphones-alt"></i> Аудиогид по музею
+                </h3>
+                <button id="audioGuideBtn" class="audio-guide-btn">
+                    <i class="fas fa-play"></i> Слушать аудиогид
+                </button>
+                <div class="audio-controls" style="display: none;" id="audioControls">
+                    <button id="rewindBtn" class="audio-control-btn" title="Назад на 10 секунд">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button id="playPauseBtn" class="audio-control-btn" title="Пауза">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button id="forwardBtn" class="audio-control-btn" title="Вперёд на 10 секунд">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                    <div class="audio-progress-container">
+                        <div class="audio-progress-bar" id="audioProgressBar">
+                            <div class="audio-progress" id="audioProgress"></div>
+                        </div>
+                    </div>
+                    <div class="audio-time">
+                        <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+                    </div>
+                    <button id="volumeBtn" class="audio-control-btn" title="Громкость">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <p class="audio-note">
+                    <i class="fas fa-info-circle"></i> Прослушайте рассказ об истории создания нашего музея и его экспонатах
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="war-stages" id="stages">
+        <div class="container">
+            <h2 class="section-title">Основные этапы Великой Отечественной войны</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1941</div>
+                        <h3>Начальный период войны</h3>
+                        <p>22 июня 1941 года — нападение Германии на СССР. Оборона Брестской крепости, Смоленское сражение, битва за Москву. Первые месяцы войны были самыми тяжелыми — Красная Армия отступала, неся огромные потери.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1942</div>
+                        <h3>Коренной перелом (начало)</h3>
+                        <p>Оборона Сталинграда, которая переросла в контрнаступление. Битва за Кавказ. Начало партизанского движения на оккупированных территориях. Формирование антигитлеровской коалиции.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1943</div>
+                        <h3>Коренной перелом (завершение)</h3>
+                        <p>Сталинградская битва (завершилась 2 февраля 1943), Курская битва (июль-август 1943), битва за Днепр. Красная Армия перехватила стратегическую инициативу и начала освобождение оккупированных территорий.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1944</div>
+                        <h3>Освобождение территории СССР</h3>
+                        <p>Десять сталинских ударов: полное снятие блокады Ленинграда, Корсунь-Шевченковская операция, освобождение Крыма, операция "Багратион" (освобождение Белоруссии), Ясско-Кишиневская операция.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1945</div>
+                        <h3>Завершающий этап войны</h3>
+                        <p>Висло-Одерская операция, Восточно-Прусская операция, битва за Берлин. 9 мая 1945 года — безоговорочная капитуляция Германии. СССР выполнил свою освободительную миссию в Европе.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Экспонаты музея</h2>
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="all">Все экспонаты</button>
+                <button class="filter-btn" data-filter="soviet">СССР</button>
+                <button class="filter-btn" data-filter="german">Германия</button>
+                <button class="filter-btn" data-filter="american">США</button>
+                <button class="filter-btn" data-filter="british">Великобритания</button>
+                <button class="filter-btn" data-filter="japanese">Япония</button>
+                <!-- Кнопки фильтра по годам -->
+                <button class="filter-btn year-filter active" data-year="all">Все годы</button>
+                <button class="filter-btn year-filter" data-year="1941-1942">1941–1942</button>
+                <button class="filter-btn year-filter" data-year="1943-1945">1943–1945</button>
+                <button class="filter-btn year-filter" data-year="modern">Современная техника</button>
+            </div>
+            <div class="gallery" id="exhibitsContainer"></div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="exhibitModal">
+        <div class="modal-content">
+            <a href="#" class="modal-share-link" id="modalShareLink" title="Ссылка на этот экспонат">
+                <i class="fas fa-link"></i>
+            </a>
+            <div class="modal-header">
+                <h3 id="modalTitle">Название техники</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="Изображение техники">
+                </div>
+                <div class="modal-details">
+                    <div class="modal-specs">
+                        <h4>Технические характеристики</h4>
+                        <div class="spec-grid" id="modalSpecs"></div>
+                    </div>
+                    <div class="modal-crew">
+                        <h4>Историческая справка</h4>
+                        <ul class="crew-list" id="modalCrew"></ul>
+                    </div>
+                    <div class="modal-culture">
+                        <h4>Дополнительная информация</h4>
+                        <ul class="culture-list" id="modalCulture"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О школьном музее</h3>
+                    <p>Музей создан в 2005 году и продолжается пополняться новыми экспонатами. Первые модели техники собирали ученики школы. Наша цель — сохранение исторической памяти.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Разделы экспозиции</h3>
+                    <a href="#" class="filter-link" data-filter="soviet">Техника СССР</a>
+                    <a href="#" class="filter-link" data-filter="german">Техника Германии</a>
+                    <a href="#" class="filter-link" data-filter="american">Техника США</a>
+                    <a href="#" class="filter-link" data-filter="british">Техника Великобритании</a>
+                    <a href="#" class="filter-link" data-filter="japanese">Техника Японии</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Для посетителей</h3>
+                    <a href="#history">История музея</a>
+                    <a href="#stages">Этапы войны</a>
+                    <a href="#gallery">Коллекция</a>
+                    <p>Наш адрес: проспект Строителей, 140</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Школьный электронный музей "Великая Отечественная война и СВО". Все права защищены.</p>
+                <p>Сайт создан в образовательных целях.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="tts-indicator" id="ttsIndicator">
+        <i class="fas fa-volume-up"></i>
+        <span>Озвучивание текста...</span>
+    </div>
+
+    <script>
+        // ===================== ПОЛНЫЙ МАССИВ ЭКСПОНАТОВ (с полем year) =====================
+        const exhibitsData = [
+            { id: 1, name: "Танк Т-34", country: "soviet", type: "tank", class: "Средний танк", maxAltitude: "-", maxSpeed: "55 км/ч", range: "300 км", landingGear: "Гусеничный", crew: "4 человека", armament: "76-мм пушка Ф-34, 2×7.62-мм пулемёта ДТ", designer: "М.И. Кошкин, А.А. Морозов, Н.А. Кучеренко", period: "1940-1945 гг.", pilots: "Д.Ф. Лавриненко, А.М. Фадин, З.К. Слюсаренко", culture: "Фильмы: 'Жаворонок', 'Битва за Москву', 'Т-34'", image: "https://upload.wikimedia.org/wikipedia/commons/3/3b/%D0%A2-34-85_%D0%A5%D0%B0%D0%B1%D0%B0%D1%80%D0%BE%D0%B2%D1%81%D0%BA_%D0%BF%D0%B0%D1%80%D0%B0%D0%B4_9_%D0%BC%D0%B0%D1%8F_2015_%D0%B3%D0%BE%D0%B4%D0%B0.JPG", description: "Самый массовый средний танк Второй мировой войны. Символ победы советского народа.", year: "1941-1942" },
+            { id: 2, name: "Истребитель Як-9", country: "soviet", type: "aircraft", class: "Истребитель", maxAltitude: "10750 м", maxSpeed: "605 км/ч", range: "870 км", landingGear: "Убирающееся", crew: "1 человек", armament: "1×20-мм пушка ШВАК, 1×12.7-мм пулемёт УБС", designer: "А.С. Яковлев", period: "1942-1945 гг.", pilots: "А.И. Покрышкин, И.Н. Кожедуб, Л.Л. Шестаков", culture: "Фильмы: 'В бой идут одни старики'", image: "https://upload.wikimedia.org/wikipedia/commons/3/37/Yak-9-1978.jpg", description: "Один из основных истребителей ВВС РККА в период войны. Разработан на основе Як-7.", year: "1943-1945" },
+            { id: 3, name: "Штурмовик Ил-2", country: "soviet", type: "aircraft", class: "Штурмовик", maxAltitude: "6000 м", maxSpeed: "414 км/ч", range: "720 км", landingGear: "Убирающееся", crew: "2 человека", armament: "2×23-мм пушки ВЯ, 2×7.62-мм пулемёта ШКАС, 400-600 кг бомб", designer: "С.В. Ильюшин", period: "1941-1945 гг.", pilots: "М.П. Одинцов, А.Н. Ефремов, Т.Я. Бегельдинов", culture: "Фильмы: 'В небе ночные ведьмы'", image: "https://upload.wikimedia.org/wikipedia/commons/2/23/Il2_sturmovik.jpg", description: "Самый массовый боевой самолёт в истории (более 36 тысяч единиц). Немцы называли его 'чёрной смертью'.", year: "1941-1942" },
+            { id: 4, name: "Танк Tiger I", country: "german", type: "tank", class: "Тяжёлый танк", maxAltitude: "-", maxSpeed: "38 км/ч", range: "140 км", landingGear: "Гусеничный", crew: "5 человек", armament: "88-мм пушка KwK 36, 2×7.92-мм пулемёта MG 34", designer: "Эрвин Адерс", period: "1942-1945 гг.", pilots: "Михаэль Виттман, Отто Кариус, Курт Книспель", culture: "Фильмы: 'Ярость', 'Белый тигр'", image: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Bundesarchiv_Bild_101I-299-1805-16%2C_Nordfrankreich%2C_Panzer_VI_%28Tiger_I%29.2.jpg", description: "Немецкий тяжёлый танк, один из самых известных танков Второй мировой войны.", year: "1943-1945" },
+            { id: 5, name: "Истребитель Bf 109", country: "german", type: "aircraft", class: "Истребитель", maxAltitude: "12000 м", maxSpeed: "640 км/ч", range: "850 км", landingGear: "Убирающееся", crew: "1 человек", armament: "2×13-мм пулемёта MG 131, 1×20-мм или 30-мм пушка", designer: "Вилли Мессершмитт", period: "1937-1945 гг.", pilots: "Эрих Хартман (352 победы), Герхард Баркхорн (301 победа)", culture: "Фильмы: 'Небесный тихоход'", image: "https://upload.wikimedia.org/wikipedia/commons/9/95/Messerschmitt_Bf_109E_at_Thunder_Over_Michigan.jpg", description: "Основной истребитель Люфтваффе на протяжении всей войны. Самый массовый истребитель в истории.", year: "1941-1942" },
+            { id: 6, name: "Истребитель P-39 Airacobra", country: "american", type: "aircraft", class: "Истребитель", maxAltitude: "10700 м", maxSpeed: "605 км/ч", range: "1046 км", landingGear: "Убирающееся", crew: "1 человек", armament: "37-мм пушка M4, 4×12.7-мм пулемёта", designer: "Bell Aircraft", period: "1941-1945 гг.", pilots: "А.И. Покрышкин", culture: "Советские фильмы о лётчиках", image: "https://upload.wikimedia.org/wikipedia/commons/4/45/P-39N_Airacobra_of_the_357th_Fighter_Group_at_Hamilton_Field_in_July_1943.jpg", description: "Американский истребитель, активно использовавшийся в СССР по ленд-лизу.", year: "1941-1942" },
+            { id: 7, name: "Грузовик Studebaker US6", country: "american", type: "truck", class: "Грузовой автомобиль", maxAltitude: "-", maxSpeed: "72 км/ч", range: "390 км", landingGear: "Колёсный", crew: "2 человека", armament: "Невооружённый", designer: "Studebaker", period: "1941-1945 гг.", pilots: "Советские водители", culture: "Фильмы о ленд-лизе", image: "https://upload.wikimedia.org/wikipedia/commons/6/65/Studebaker_US6_in_Techical_museum_Togliatti.JPG", description: "Американский грузовик, поставлявшийся в СССР по ленд-лизу.", year: "1941-1942" },
+            { id: 8, name: "Истребитель P-40 Tomahawk", country: "american", type: "aircraft", class: "Истребитель", maxAltitude: "8800 м", maxSpeed: "580 км/ч", range: "1100 км", landingGear: "Убирающееся", crew: "1 человек", armament: "6×12.7-мм пулемёта Browning M2", designer: "Curtiss-Wright", period: "1939-1944 гг.", pilots: "Американские и советские лётчики", culture: "Фильмы о ленд-лизе", image: "https://www.airwar.ru/image/i/fww2/p40-i.jpg", description: "Американский истребитель, поставлявшийся в СССР.", year: "1941-1942" },
+            { id: 9, name: "Транспортный самолёт C-47 Skytrain", country: "american", type: "aircraft", class: "Транспортный самолёт", maxAltitude: "8050 м", maxSpeed: "360 км/ч", range: "2600 км", landingGear: "Убирающееся", crew: "3 человека", armament: "Невооружённый", designer: "Douglas Aircraft Company", period: "1941-н.в.", pilots: "Экипажи транспортной авиации", culture: "Фильмы о транспортных перевозках", image: "https://upload.wikimedia.org/wikipedia/commons/7/7f/C47_Skytrain_-_Duxford_D-Day_Show_2014_%28cropped%29.jpg", description: "Американский транспортный самолёт, известный также как DC-3.", year: "1943-1945" },
+            { id: 10, name: "Истребитель F-84F Thunderstreak", country: "american", type: "aircraft", class: "Истребитель-бомбардировщик", maxAltitude: "14000 м", maxSpeed: "1119 км/ч", range: "1300 км", landingGear: "Убирающееся", crew: "1 человек", armament: "6×12.7-мм пулемёта M3, до 1800 кг бомб", designer: "Republic Aviation", period: "1954-1965 гг.", pilots: "Пилоты НАТО", culture: "Фильмы о холодной войне", image: "https://upload.wikimedia.org/wikipedia/commons/c/c4/F-84F_Thunderstreak.jpg", description: "Американский реактивный истребитель-бомбардировщик времен холодной войны.", year: "modern" },
+            { id: 11, name: "Истребитель F4U «Корсар»", country: "american", type: "aircraft", class: "Палубный истребитель", maxAltitude: "11200 м", maxSpeed: "718 км/ч", range: "1600 км", landingGear: "Убирающееся", crew: "1 человек", armament: "6×12.7-мм пулемёта Browning M2", designer: "Chance Vought", period: "1942-1953 гг.", pilots: "Американские морские лётчики", culture: "Фильмы о войне на Тихом океане", image: "https://upload.wikimedia.org/wikipedia/commons/0/03/F4U_Corsair.jpg", description: "Американский палубный истребитель с характерной формой крыла.", year: "1943-1945" },
+            { id: 12, name: "Истребитель A6M Zero", country: "japanese", type: "aircraft", class: "Палубный истребитель", maxAltitude: "10000 м", maxSpeed: "565 км/ч", range: "3100 км", landingGear: "Убирающееся", crew: "1 человек", armament: "2×20-мм пушки Type 99, 2×7.7-мм пулемёта Type 97", designer: "Jiro Horikoshi", period: "1940-1945 гг.", pilots: "Японские морские лётчики", culture: "Фильмы о войне на Тихом океане", image: "https://upload.wikimedia.org/wikipedia/commons/0/08/Mitsubishi_A6M_Zero%2C_Chino%2C_California.jpg", description: "Японский палубный истребитель, основной истребитель Японии в начале войны.", year: "1941-1942" },
+            { id: 13, name: "Истребитель F-86 Sabre", country: "american", type: "aircraft", class: "Реактивный истребитель", maxAltitude: "15000 м", maxSpeed: "1106 км/ч", range: "2450 км", landingGear: "Убирающееся", crew: "1 человек", armament: "6×12.7-мм пулемёта M3", designer: "North American Aviation", period: "1949-1994 гг.", pilots: "Пилоты США и НАТО", culture: "Фильмы о Корейской войне", image: "https://upload.wikimedia.org/wikipedia/commons/f/f1/North_American_F86-01.JPG", description: "Американский реактивный истребитель, основной истребитель США в Корейской войне.", year: "modern" },
+            { id: 14, name: "Джип Willys MB", country: "american", type: "car", class: "Лёгкий внедорожник", maxAltitude: "-", maxSpeed: "105 км/ч", range: "480 км", landingGear: "Колёсный", crew: "4 человека", armament: "Мог устанавливаться пулемёт", designer: "Willys-Overland", period: "1941-1945 гг.", pilots: "Союзные войска", culture: "Фильмы о Второй мировой войне", image: "https://upload.wikimedia.org/wikipedia/commons/4/4e/1942_Willys-Overland_MB_Jeep_%2812670026055%29.jpg", description: "Знаменитый американский военный джип, символ Второй мировой войны.", year: "1941-1942" },
+            { id: 15, name: "Танк Т-26 (обычный)", country: "soviet", type: "tank", class: "Лёгкий танк", maxAltitude: "-", maxSpeed: "30 км/ч", range: "200 км", landingGear: "Гусеничный", crew: "3 человека", armament: "45-мм пушка 20-К, 2×7.62-мм пулемёта ДТ", designer: "С.А. Гинзбург", period: "1931-1941 гг.", pilots: "Советские танкисты начального периода", culture: "Документальные фильмы о начале ВОВ", image: "https://upload.wikimedia.org/wikipedia/commons/d/d1/T-26_model_1935_-_Central_Armed_Forces_Museum%2C_Moscow_%2837954394925%29.jpg", description: "Самый массовый советский танк 1930-х годов.", year: "1941-1942" },
+            { id: 16, name: "Танк Т-26 двухбашенный", country: "soviet", type: "tank", class: "Лёгкий танк", maxAltitude: "-", maxSpeed: "28 км/ч", range: "175 км", landingGear: "Гусеничный", crew: "3 человека", armament: "2×7.62-мм пулемёта ДТ", designer: "С.А. Гинзбург", period: "1931-1933 гг.", pilots: "Советские танкисты", culture: "Документальные фильмы", image: "https://upload.wikimedia.org/wikipedia/commons/d/d2/%D0%A6%D0%9C_%D0%92%D0%9E%D0%92._%D0%A2%D0%B0%D0%BD%D0%BA_%D0%A2-26_%28%D0%A1%D0%A1%D0%A1%D0%A0%29.jpg", description: "Ранняя двухбашенная модификация танка Т-26.", year: "1941-1942" },
+            { id: 17, name: "САУ Marder III", country: "german", type: "tank", class: "Самоходная артиллерийская установка", maxAltitude: "-", maxSpeed: "42 км/ч", range: "185 км", landingGear: "Гусеничный", crew: "4 человека", armament: "75-мм пушка PaK 40/3, 7.92-мм пулемёт MG 34", designer: "BMM", period: "1942-1944 гг.", pilots: "Расчеты самоходной артиллерии", culture: "Фильмы о немецкой технике", image: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Marder-III.0004trh9.jpg", description: "Немецкая противотанковая САУ на базе танка PzKpfw 38(t).", year: "1943-1945" },
+            { id: 18, name: "Штурмпанцер I", country: "german", type: "tank", class: "Штурмовое орудие", maxAltitude: "-", maxSpeed: "40 км/ч", range: "140 км", landingGear: "Гусеничный", crew: "2 человека", armament: "150-мм пехотное орудие sIG 33", designer: "Alkett", period: "1940-1941 гг.", pilots: "Расчеты штурмовых орудий", culture: "Фильмы о начале войны", image: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Bundesarchiv_Bild_101I-216-0406-37%2C_Russland%2C_getarnter_Panzer_I_B_mit_I.G._33.jpg", description: "Немецкое штурмовое орудие на базе PzKpfw I с тяжёлой пехотной гаубицей.", year: "1941-1942" },
+            { id: 19, name: "САУ СУ-152", country: "soviet", type: "tank", class: "Тяжёлая самоходная артиллерийская установка", maxAltitude: "-", maxSpeed: "43 км/ч", range: "330 км", landingGear: "Гусеничный", crew: "5 человек", armament: "152-мм гаубица-пушка МЛ-20С", designer: "Ж.Я. Котин", period: "1943-1944 гг.", pilots: "Расчеты самоходной артиллерии", culture: "Фильмы о Курской битве", image: "https://upload.wikimedia.org/wikipedia/commons/f/fb/11-Heavy_self_propelled_gun_su_152-LMW.jpg", description: "Советская тяжёлая самоходная артиллерийская установка для борьбы с тяжёлыми немецкими танками.", year: "1943-1945" },
+            { id: 20, name: "Грузовик ЗИС-5", country: "soviet", type: "truck", class: "Грузовой автомобиль", maxAltitude: "-", maxSpeed: "60 км/ч", range: "200 км", landingGear: "Колёсный", crew: "2 человека", armament: "Невооружённый", designer: "ЗИС", period: "1933-1948 гг.", pilots: "Советские водители", culture: "Фильмы о войне", image: "https://upload.wikimedia.org/wikipedia/commons/3/3d/ZIS-5_truck_1933.JPG", description: "Советский грузовик грузоподъёмностью 3 тонны, 'рабочая лошадка' Красной Армии.", year: "1941-1942" },
+            { id: 21, name: "Танк Т-50", country: "soviet", type: "tank", class: "Лёгкий танк", maxAltitude: "-", maxSpeed: "60 км/ч", range: "344 км", landingGear: "Гусеничный", crew: "4 человека", armament: "45-мм пушка 20-К, 2×7.62-мм пулемёта ДТ", designer: "С.А. Гинзбург", period: "1941-1942 гг.", pilots: "Экипажи лёгких танков", culture: "Документальные фильмы", image: "https://upload.wikimedia.org/wikipedia/commons/5/58/Soviet_and_Russian_vehicles_in_Kubinka_tank_museum_337.jpg", description: "Советский лёгкий танк, разработанный как замена Т-26.", year: "1941-1942" },
+            { id: 22, name: "САУ СУ-85", country: "soviet", type: "tank", class: "Средняя самоходная артиллерийская установка", maxAltitude: "-", maxSpeed: "55 км/ч", range: "400 км", landingGear: "Гусеничный", crew: "4 человека", armament: "85-мм пушка Д-5С", designer: "Л.И. Горлицкий", period: "1943-1944 гг.", pilots: "Расчеты самоходной артиллерии", culture: "Фильмы о Курской битве", image: "https://upload.wikimedia.org/wikipedia/commons/f/fe/%D0%A1%D0%B0%D0%BC%D0%BE%D1%85%D0%BE%D0%B4%D0%BD%D0%B0%D1%8F_%D0%B0%D1%80%D1%82%D0%B8%D0%BB%D0%BB%D0%B5%D1%80%D0%B8%D0%B9%D1%81%D0%BA%D0%B0%D1%8F_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%A1%D0%A3-85.jpg", description: "Советская средняя самоходная артиллерийская установка на базе Т-34.", year: "1943-1945" },
+            { id: 23, name: "САУ ИСУ-122", country: "soviet", type: "tank", class: "Тяжёлая самоходная артиллерийская установка", maxAltitude: "-", maxSpeed: "37 км/ч", range: "220 км", landingGear: "Гусеничный", crew: "5 человека", armament: "122-мм пушка А-19С", designer: "Ж.Я. Котин", period: "1944-1945 гг.", pilots: "Расчеты самоходной артиллерии", culture: "Фильмы о завершающем этапе войны", image: "https://upload.wikimedia.org/wikipedia/commons/0/01/ISU-122_1944_at_Sapun-Gora.jpg", description: "Советская тяжёлая самоходная артиллерийская установка на базе ИС-2.", year: "1943-1945" },
+            { id: 24, name: "Танк КВ-2", country: "soviet", type: "tank", class: "Тяжёлый штурмовой танк", maxAltitude: "-", maxSpeed: "34 км/ч", range: "250 км", landingGear: "Гусеничный", crew: "6 человек", armament: "152-мм гаубица М-10, 3×7.62-мм пулемёта ДТ", designer: "Ж.Я. Котин", period: "1940-1941 гг.", pilots: "Экипажи тяжёлых танков", culture: "Фильмы о начале войны", image: "https://upload.wikimedia.org/wikipedia/commons/5/51/%D0%9A%D0%B2-2_1.jpg", description: "Советский тяжёлый штурмовой танк с 152-мм гаубицей.", year: "1941-1942" },
+            { id: 25, name: "Танк Т-60", country: "soviet", type: "tank", class: "Лёгкий танк", maxAltitude: "-", maxSpeed: "42 км/ч", range: "450 км", landingGear: "Гусеничный", crew: "2 человека", armament: "20-мм пушка ТНШ, 7.62-мм пулемёт ДТ", designer: "Н.А. Астров", period: "1941-1943 гг.", pilots: "Экипажи лёгких танков", culture: "Фильмы о битве за Москву", image: "https://upload.wikimedia.org/wikipedia/commons/6/6a/%D0%A2%D0%B0%D0%BD%D0%BA_%D0%A2-60_%D0%B2_%D0%9C%D1%83%D0%B7%D0%B5%D0%B5_%D0%BE%D1%82%D0%B5%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9_%D0%B2%D0%BE%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9_%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8.jpg", description: "Советский лёгкий танк, массово производившийся в начале войны.", year: "1941-1942" },
+            { id: 26, name: "Бомбардировщик He 111", country: "german", type: "bomber", class: "Средний бомбардировщик", maxAltitude: "6700 м", maxSpeed: "440 км/ч", range: "2300 км", landingGear: "Убирающееся", crew: "5 человек", armament: "6×7.92-мм пулемёта MG 15, до 2000 кг бомб", designer: "Зигфрид и Вальтер Гюнтер", period: "1936-1945 гг.", pilots: "Экипажи бомбардировочных эскадр", culture: "Фильмы о битве за Британию", image: "https://upload.wikimedia.org/wikipedia/commons/9/98/Heinkel_HE111K.jpg", description: "Основной немецкий бомбардировщик начала войны.", year: "1941-1942" },
+            { id: 27, name: "Разведчик Fw 189", country: "german", type: "aircraft", class: "Тактический разведчик", maxAltitude: "7300 м", maxSpeed: "350 км/ч", range: "670 км", landingGear: "Убирающееся", crew: "3 человека", armament: "4×7.92-мм пулемёта MG 17, 2×7.92-мм пулемёта MG 15", designer: "Курт Танк", period: "1940-1945 гг.", pilots: "Экипажи разведывательной авиации", culture: "Документальные фильмы", image: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Focke_Wulf_Fw189.jpg", description: "Немецкий тактический разведчик, известный как 'Летающий глаз'.", year: "1941-1942" },
+            { id: 28, name: "Истребитель Me.410", country: "german", type: "aircraft", class: "Тяжёлый истребитель", maxAltitude: "10000 м", maxSpeed: "625 км/ч", range: "1690 км", landingGear: "Убирающееся", crew: "2 человека", armament: "2×20-мм пушки MG 151/20, 2×7.92-мм пулемёта MG 17, 2×13 мм пулемёта MG 131", designer: "Вилли Мессершмитт", period: "1943-1945 гг.", pilots: "Экипажи тяжёлых истребителей", culture: "Документальные фильмы", image: "https://airpages.ru/images/me410_hornisse_02.jpg", description: "Немецкий тяжёлый истребитель, развитие Me 210.", year: "1943-1945" },
+            { id: 29, name: "Бомбардировщик Ил-4", country: "soviet", type: "bomber", class: "Дальний бомбардировщик", maxAltitude: "8900 м", maxSpeed: "430 км/ч", range: "3800 км", landingGear: "Убирающееся", crew: "4 человека", armament: "2×7.62-мм пулемёта ШКАС, 1×12.7-мм пулемёт УБТ, до 2500 кг бомб", designer: "С.В. Ильюшин", period: "1939-1945 гг.", pilots: "Экипажи дальней авиации", culture: "Фильмы о бомбардировках Берлина", image: "https://upload.wikimedia.org/wikipedia/commons/b/bf/Il-4_front_view_Moscow.jpg", description: "Советский дальний бомбардировщик.", year: "1941-1942" },
+            { id: 30, name: "Бомбардировщик Пе-2", country: "soviet", type: "bomber", class: "Пикирующий бомбардировщик", maxAltitude: "8800 м", maxSpeed: "540 км/ч", range: "1200 км", landingGear: "Убирающееся", crew: "3 человека", armament: "4×7.62-мм пулемёта ШКАС, до 1000 кг бомб", designer: "В.М. Петляков", period: "1941-1945 гг.", pilots: "Экипажи бомбардировочной авиации", culture: "Фильмы о советской авиации", image: "https://upload.wikimedia.org/wikipedia/commons/6/60/Pe-2-2004.jpg", description: "Советский пикирующий бомбардировщик.", year: "1941-1942" },
+            { id: 31, name: "Штурмовик Су-2", country: "soviet", type: "aircraft", class: "Ближний бомбардировщик", maxAltitude: "8800 м", maxSpeed: "486 км/ч", range: "910 км", landingGear: "Убирающееся", crew: "2 человека", armament: "6×7.62-мм пулемёта ШКАС, до 400 кг бомб", designer: "П.О. Сухой", period: "1940-1942 гг.", pilots: "Экипажи штурмовой авиации", culture: "Фильмы о начале войны", image: "https://upload.wikimedia.org/wikipedia/commons/5/58/Poklonnaya_Gora-2007-7.JPG", description: "Советский ближний бомбардировщик.", year: "1941-1942" },
+            { id: 32, name: "Пассажирский самолёт Douglas DC-3", country: "american", type: "aircraft", class: "Пассажирский самолёт", maxAltitude: "8050 м", maxSpeed: "360 км/ч", range: "2600 км", landingGear: "Убирающееся", crew: "3 человека", armament: "Невооружённый", designer: "Douglas Aircraft Company", period: "1936-н.в.", pilots: "Гражданские пилоты", culture: "Фильмы о гражданской авиации", image: "https://upload.wikimedia.org/wikipedia/commons/d/da/Air_Nostalgia_Douglas_DC-3_Melton_Vabre-1.jpg", description: "Американский пассажирский самолёт, ставший основой для C-47.", year: "1943-1945" },
+            { id: 33, name: "Истребитель P-51 Mustang", country: "american", type: "aircraft", class: "Истребитель", maxAltitude: "12700 м", maxSpeed: "703 км/ч", range: "2755 км", landingGear: "Убирающееся", crew: "1 человек", armament: "6×12.7-мм пулемёта Browning M2", designer: "North American Aviation", period: "1942-1945 гг.", pilots: "Чак Егер", culture: "Фильмы о американских лётчиках", image: "https://upload.wikimedia.org/wikipedia/commons/2/23/P-51-361.jpg", description: "Один из лучших истребителей Второй мировой войны.", year: "1943-1945" },
+            { id: 34, name: "Истребитель Ла-5", country: "soviet", type: "aircraft", class: "Истребитель", maxAltitude: "9500 м", maxSpeed: "648 км/ч", range: "765 км", landingGear: "Убирающееся", crew: "1 человек", armament: "2×20-мм пушки ШВАК", designer: "С.А. Лавочкин", period: "1942-1945 гг.", pilots: "И.Н. Кожедуб", culture: "Фильмы о советских лётчиках", image: "https://topwar.ru/uploads/posts/2012-09/1346973889_la-5-1.jpg", description: "Один из лучших советских истребителей Великой Отечественной войны.", year: "1943-1945" },
+            { id: 35, name: "Танк Т-28", country: "soviet", type: "tank", class: "Средний танк", maxAltitude: "-", maxSpeed: "37 км/ч", range: "220 км", landingGear: "Гусеничный", crew: "6 человек", armament: "76-мм пушка КТ-28, 4×7.62-мм пулемёта ДТ", designer: "С.А. Гинзбург", period: "1933-1941 гг.", pilots: "Экипажи тяжёлых танковых бригад", culture: "Фильмы о начале войны", image: "https://upload.wikimedia.org/wikipedia/commons/5/5f/T28_parola_1.jpg", description: "Советский трёхбашенный средний танк.", year: "1941-1942" },
+            { id: 36, name: "РСЗО БМ-13 'Катюша'", country: "soviet", type: "artillery", class: "Реактивная система залпового огня", maxAltitude: "-", maxSpeed: "60 км/ч", range: "8500 м", landingGear: "Колёсный", crew: "6 человек", armament: "16×132-мм реактивных снарядов", designer: "ГСКБ-47", period: "1941-1945 гг.", pilots: "Расчеты гвардейских миномётных частей", culture: "Фильмы о Великой Отечественной войне", image: "https://upload.wikimedia.org/wikipedia/commons/c/cc/Verkhnyaya_Pyshma_Tank_Museum_2011_029.jpg", description: "Легендарная советская РСЗО. Немцы называли её 'Сталинский орган'.", year: "1941-1942" },
+            { id: 37, name: "САУ СУ-76", country: "soviet", type: "tank", class: "Лёгкая самоходная артиллерийская установка", maxAltitude: "-", maxSpeed: "45 км/ч", range: "320 км", landingGear: "Гусеничный", crew: "4 человека", armament: "76-мм пушка ЗИС-3", designer: "С.А. Гинзбург", period: "1942-1945 гг.", pilots: "Расчеты самоходной артиллерии", culture: "Фильмы о советской артиллерии", image: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Su76_nn.jpg", description: "Советская лёгкая самоходная артиллерийская установка.", year: "1943-1945" },
+            { id: 38, name: "Бомбардировщик Ju 88", country: "german", type: "bomber", class: "Средний бомбардировщик", maxAltitude: "8200 м", maxSpeed: "510 км/ч", range: "2430 км", landingGear: "Убирающееся", crew: "4 человека", armament: "7×7.92-мм пулемёта MG 81, до 3000 кг бомб", designer: "Hugo Junkers", period: "1939-1945 гг.", pilots: "Экипажи бомбардировочной авиации", culture: "Фильмы о войне", image: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Junkers_Ju_88A_on_the_ground.jpg", description: "Немецкий многоцелевой самолёт.", year: "1941-1942" },
+            { id: 39, name: "Истребитель Fw 190", country: "german", type: "aircraft", class: "Истребитель", maxAltitude: "11400 м", maxSpeed: "685 км/ч", range: "800 км", landingGear: "Убирающееся", crew: "1 человек", armament: "4×20-мм пушки MG 151/20, 2×13-мм пулемёта MG 131", designer: "Курт Танк", period: "1941-1945 гг.", pilots: "Отто Киттель (267 побед), Вальтер Новотны (258 побед)", culture: "Фильмы о воздушных боях", image: "https://upload.wikimedia.org/wikipedia/commons/7/79/Fw_190A-3_JG_2_in_Britain_1942.jpg", description: "Один из лучших немецких истребителей Второй мировой войны.", year: "1943-1945" },
+            { id: 40, name: "Танк Tiger II", country: "german", type: "tank", class: "Тяжёлый танк", maxAltitude: "-", maxSpeed: "38 км/ч", range: "170 км", landingGear: "Гусеничный", crew: "5 человек", armament: "88-мм пушка KwK 43, 2×7.92-мм пулемёта MG 34", designer: "Henschel & Son", period: "1944-1945 гг.", pilots: "Экипажи тяжёлых танковых батальонов", culture: "Фильмы о завершающем этапе войны", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Bovington_Tiger_II_grey_bg.jpg/1280px-Bovington_Tiger_II_grey_bg.jpg", description: "Немецкий тяжёлый танк, также известный как 'Королевский тигр'.", year: "1943-1945" },
+            { id: 41, name: "Танк Panther", country: "german", type: "tank", class: "Средний танк", maxAltitude: "-", maxSpeed: "46 км/ч", range: "250 км", landingGear: "Гусеничный", crew: "5 человек", armament: "75-мм пушка KwK 42, 2×7.92-мм пулемёта MG 34", designer: "MAN AG", period: "1943-1945 гг.", pilots: "Экипажи танковых дивизий", culture: "Фильмы о Курской битве", image: "https://upload.wikimedia.org/wikipedia/commons/4/4e/PanzerV_Ausf.G_1_sk.jpg", description: "Немецкий средний танк, считавшийся одним из лучших танков войны.", year: "1943-1945" },
+            { id: 42, name: "Танк Т-35", country: "soviet", type: "tank", class: "Тяжёлый танк", maxAltitude: "-", maxSpeed: "30 км/ч", range: "150 км", landingGear: "Гусеничный", crew: "11 человек", armament: "76-мм пушка, 2×45-мм пушки, 5×7.62-мм пулемёта", designer: "Н.В. Барыков", period: "1933-1939 гг.", pilots: "Экипажи тяжёлых танковых полков", culture: "Документальные фильмы", image: "https://upload.wikimedia.org/wikipedia/commons/2/2d/T35_7.jpg", description: "Советский пятибашенный тяжёлый танк.", year: "1941-1942" },
+            { id: 43, name: "Штурмовик Су-25", country: "soviet", type: "aircraft", class: "Штурмовик", maxAltitude: "7000 м", maxSpeed: "950 км/ч", range: "750 км", landingGear: "Убирающееся", crew: "1 человек", armament: "30-мм пушка ГШ-30-2, до 4400 кг боевой нагрузки", designer: "П.О. Сухой", period: "1981-н.в.", pilots: "Герои России", culture: "Фильмы о современных конфликтах", image: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Sukhoi_Su-25SM_%C2%ABRoman_Filipov%C2%BB_05.jpg", description: "Советский и российский бронированный штурмовик, 'летающий танк'.", year: "modern" },
+            { id: 44, name: "Танк Т-80БВ", country: "soviet", type: "tank", class: "Основной боевой танк", maxAltitude: "-", maxSpeed: "70 км/ч", range: "500 км", landingGear: "Гусеничный", crew: "3 человека", armament: "125-мм гладкоствольная пушка 2А46М-1, 12.7-мм пулемёт НСВТ, 7.62-мм пулемёт ПКТ", designer: "Кировский завод", period: "1985-н.в.", pilots: "Российские танкисты", culture: "Современные военные фильмы", image: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Russian_T-80BV.jpg", description: "Советский и российский основной боевой танк с газотурбинным двигателем.", year: "modern" },
+            { id: 45, name: "РСЗО БМ-21 'Град'", country: "soviet", type: "artillery", class: "Реактивная система залпового огня", maxAltitude: "-", maxSpeed: "75 км/ч", range: "20500 м", landingGear: "Колёсный", crew: "6 человек", armament: "40×122-мм реактивных снарядов", designer: "НИИ-147", period: "1963-н.в.", pilots: "Расчеты реактивной артиллерии", culture: "Современные документальные фильмы", image: "https://upload.wikimedia.org/wikipedia/commons/7/7d/ParkPatriot2015part5-37.jpg", description: "Советская и российская РСЗО, одна из самых массовых в мире.", year: "modern" },
+            { id: 46, name: "Танк Т-72Б3", country: "soviet", type: "tank", class: "Основной боевой танк", maxAltitude: "-", maxSpeed: "60 км/ч", range: "500 км", landingGear: "Гусеничный", crew: "3 человека", armament: "125-мм гладкоствольная пушка 2А46М-5, 12.7-мм пулемёт НСВТ, 7.62-мм пулемёт ПКТ", designer: "Уралвагонзавод", period: "2012-н.в.", pilots: "Российские танкисты", culture: "Современные военные фильмы", image: "https://upload.wikimedia.org/wikipedia/commons/5/56/Alabino05042017-40.jpg", description: "Современная российская модернизация танка Т-72.", year: "modern" },
+            { id: 47, name: "Танк КВ-1", country: "soviet", type: "tank", class: "Тяжёлый танк", maxAltitude: "-", maxSpeed: "35 км/ч", range: "250 км", landingGear: "Гусеничный", crew: "5 человек", armament: "76-мм пушка Ф-32, 3×7.62-мм пулемёта ДТ", designer: "Ж.Я. Котин", period: "1940-1942 гг.", pilots: "З.Г. Колобанов", culture: "Фильмы: 'Белый тигр'", image: "https://upload.wikimedia.org/wikipedia/commons/3/38/KV-1.JPG", description: "Советский тяжёлый танк начала войны. Отличался мощной бронёй.", year: "1941-1942" },
+            { id: 48, name: "Танк ИС-2", country: "soviet", type: "tank", class: "Тяжёлый танк", maxAltitude: "-", maxSpeed: "37 км/ч", range: "240 км", landingGear: "Гусеничный", crew: "4 человека", armament: "122-мм пушка Д-25Т, 3×7.62-мм пулемёта ДТ, 1×12.7-мм ДШК", designer: "Ж.Я. Котин, Н.Л. Духов", period: "1943-1945 гг.", pilots: "Герои битвы за Берлин", culture: "Фильмы о завершающем этапе войны", image: "https://upload.wikimedia.org/wikipedia/commons/1/13/TankBiathlon2016opening-10.jpg", description: "Мощный советский тяжёлый танк завершающего периода войны.", year: "1943-1945" },
+            { id: 49, name: "Бронеавтомобиль БА-10", country: "soviet", type: "car", class: "Средний бронеавтомобиль", maxAltitude: "-", maxSpeed: "53 км/ч", range: "300 км", landingGear: "Колёсный", crew: "4 человека", armament: "45-мм пушка 20-К, 2×7.62-мм пулемёта ДТ", designer: "И.В. Гавалов", period: "1938-1941 гг.", pilots: "Экипажи разведывательных подразделений", culture: "Документальные фильмы", image: "https://upload.wikimedia.org/wikipedia/commons/3/33/%D0%91%D1%80%D0%BE%D0%BD%D0%B5%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C_%D0%91%D0%90-10_%D0%B2_%D0%9C%D1%83%D0%B7%D0%B5%D0%B5_%D0%BE%D1%82%D0%B5%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9_%D0%B2%D0%BE%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9_%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8.jpg", description: "Советский средний бронеавтомобиль.", year: "1941-1942" },
+            { id: 50, name: "Грузовик ГАЗ-АА 'Полуторка'", country: "soviet", type: "truck", class: "Грузовой автомобиль", maxAltitude: "-", maxSpeed: "70 км/ч", range: "215 км", landingGear: "Колёсный", crew: "2 человека", armament: "Невооружённый", designer: "ГАЗ", period: "1932-1950 гг.", pilots: "Советские водители", culture: "Фильмы о войне", image: "https://upload.wikimedia.org/wikipedia/commons/4/41/%D0%93%D0%90%D0%97-%D0%90%D0%90_%28%22%D0%9F%D0%BE%D0%BB%D1%83%D1%82%D0%BE%D1%80%D0%BA%D0%B0%22%29.jpg", description: "Советский грузовик грузоподъёмностью 1.5 тонны.", year: "1941-1942" },
+        ];  
+
+        // ===================== ТЕКСТЫ ДЛЯ АУДИОГИДОВ =====================
+        const exhibitAudioTexts = {};
+        exhibitsData.forEach(ex => { exhibitAudioTexts[ex.id] = `${ex.name}. ${ex.description}. ${ex.designer}, ${ex.period}. Скорость ${ex.maxSpeed}, вооружение: ${ex.armament}.`; });
+
+        // ===================== TTS МЕНЕДЖЕР =====================
+        class TTSManager {
+            constructor() {
+                this.isSupported = 'speechSynthesis' in window;
+                this.currentUtterance = null;
+                this.isSpeaking = false;
+                this.currentProgress = 0;
+                this.progressInterval = null;
+                this.totalDuration = 30;
+                this.init();
+            }
+            init() { if (this.isSupported) speechSynthesis.getVoices(); }
+            speak(text, options = {}) {
+                if (!this.isSupported) return false;
+                this.stop();
+                this.currentUtterance = new SpeechSynthesisUtterance(text);
+                this.currentUtterance.lang = options.lang || 'ru-RU';
+                this.currentUtterance.rate = options.rate || 1.0;
+                this.currentUtterance.pitch = options.pitch || 1.0;
+                this.currentUtterance.volume = options.volume || 1.0;
+                const voices = speechSynthesis.getVoices();
+                const russianVoice = voices.find(voice => voice.lang.startsWith('ru') || voice.name.includes('Russian'));
+                if (russianVoice) this.currentUtterance.voice = russianVoice;
+                this.currentUtterance.onstart = () => { this.isSpeaking = true; this.startProgressTimer(); if (options.onStart) options.onStart(); document.getElementById('ttsIndicator')?.classList.add('show'); };
+                this.currentUtterance.onend = () => { this.isSpeaking = false; this.stopProgressTimer(); this.currentProgress = 0; if (options.onEnd) options.onEnd(); document.getElementById('ttsIndicator')?.classList.remove('show'); };
+                this.currentUtterance.onerror = () => { this.isSpeaking = false; this.stopProgressTimer(); if (options.onError) options.onError(); document.getElementById('ttsIndicator')?.classList.remove('show'); };
+                speechSynthesis.speak(this.currentUtterance);
+                return true;
+            }
+            pause() { if (this.isSpeaking) speechSynthesis.pause(); this.stopProgressTimer(); }
+            resume() { if (this.isSpeaking && speechSynthesis.paused) speechSynthesis.resume(); this.startProgressTimer(); }
+            stop() { speechSynthesis.cancel(); this.isSpeaking = false; this.stopProgressTimer(); this.currentProgress = 0; document.getElementById('ttsIndicator')?.classList.remove('show'); }
+            startProgressTimer() { this.stopProgressTimer(); this.progressInterval = setInterval(() => { this.currentProgress += 100 / (this.totalDuration * 10); if (this.currentProgress >= 100) this.stopProgressTimer(); }, 100); }
+            stopProgressTimer() { if (this.progressInterval) { clearInterval(this.progressInterval); this.progressInterval = null; } }
+            getProgress() { return Math.min(this.currentProgress, 100); }
+            isTTSAvailable() { return this.isSupported; }
+        }
+        const ttsManager = new TTSManager();
+
+        // ===================== DOM ЭЛЕМЕНТЫ =====================
+        const gallery = document.getElementById('exhibitsContainer');
+        const modal = document.getElementById('exhibitModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalImage = document.getElementById('modalImage');
+        const modalSpecs = document.getElementById('modalSpecs');
+        const modalCrew = document.getElementById('modalCrew');
+        const modalCulture = document.getElementById('modalCulture');
+        const closeModal = document.getElementById('closeModal');
+        const modalShareLink = document.getElementById('modalShareLink');
+
+        let currentExhibitAudioPlayer = null;
+        let isExhibitAudioPlaying = false;
+
+        function getCountryText(country) { switch(country) { case 'soviet': return 'СССР'; case 'german': return 'Германия'; case 'american': return 'США'; case 'british': return 'Великобритания'; case 'japanese': return 'Япония'; default: return country; } }
+        function getTypeText(type) { switch(type) { case 'aircraft': return 'Самолёт'; case 'tank': return 'Танк'; case 'bomber': return 'Бомбардировщик'; case 'truck': return 'Грузовик'; case 'car': return 'Автомобиль'; case 'artillery': return 'Артиллерия'; default: return type; } }
+        function createExhibitLink(id) { return `${window.location.origin}${window.location.pathname}?id=${id}`; }
+
+        function generateExhibitQrCode(cardElement, exhibitId) {
+            if (typeof qrcode !== 'function') return;
+            const qrContainer = document.createElement('div'); qrContainer.className = 'exhibit-qr-container'; qrContainer.title = 'QR-код экспоната';
+            const canvas = document.createElement('canvas'); canvas.className = 'exhibit-qr-canvas'; canvas.width = 80; canvas.height = 80;
+            qrContainer.appendChild(canvas); cardElement.appendChild(qrContainer);
+            const url = createExhibitLink(exhibitId);
+            try {
+                const qr = qrcode(0, 'M'); qr.addData(url); qr.make();
+                const size = qr.getModuleCount(); const ctx = canvas.getContext('2d'); const cellSize = canvas.width / size;
+                for (let row = 0; row < size; row++) for (let col = 0; col < size; col++) { ctx.fillStyle = qr.isDark(row, col) ? '#000000' : '#ffffff'; ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize); }
+            } catch(e) { console.warn(e); }
+        }
+
+        // Фильтрация по странам и годам
+        let currentCountryFilter = 'all';
+        let currentYearFilter = 'all';
+
+        function applyFilters() {
+            const exhibits = document.querySelectorAll('.exhibit');
+            exhibits.forEach(exhibit => {
+                const country = exhibit.getAttribute('data-category');
+                const year = exhibit.getAttribute('data-year');
+                const matchCountry = (currentCountryFilter === 'all' || country === currentCountryFilter);
+                const matchYear = (currentYearFilter === 'all' || year === currentYearFilter);
+                if (matchCountry && matchYear) exhibit.classList.add('show');
+                else exhibit.classList.remove('show');
+            });
+        }
+
+        function createGallery() {
+            gallery.innerHTML = '';
+            exhibitsData.forEach(exhibit => {
+                const exhibitElement = document.createElement('div');
+                exhibitElement.className = `exhibit show`;
+                exhibitElement.setAttribute('data-category', exhibit.country);
+                exhibitElement.setAttribute('data-year', exhibit.year);
+                exhibitElement.setAttribute('data-id', exhibit.id);
+
+                let flagClass = '', flagText = '';
+                switch (exhibit.country) {
+                    case 'soviet': flagClass = 'soviet'; flagText = 'СССР'; break;
+                    case 'german': flagClass = 'german'; flagText = 'ГЕР'; break;
+                    case 'american': flagClass = 'american'; flagText = 'США'; break;
+                    case 'british': flagClass = 'british'; flagText = 'ВБ'; break;
+                    case 'japanese': flagClass = 'japanese'; flagText = 'ЯП'; break;
+                }
+                let typeClass = exhibit.type, typeText = getTypeText(exhibit.type);
+                let tagTypeClass = '';
+                if (exhibit.type === 'aircraft' || exhibit.type === 'bomber') tagTypeClass = 'fighter';
+                else if (exhibit.type === 'tank') tagTypeClass = 'tank';
+                else if (exhibit.type === 'artillery') tagTypeClass = 'artillery';
+                else if (exhibit.type === 'truck' || exhibit.type === 'car') tagTypeClass = 'transport';
+                else tagTypeClass = 'transport';
+
+                const hasAudio = exhibitAudioTexts[exhibit.id];
+                const audioIndicator = hasAudio ? `<div class="exhibit-audio-indicator" title="Есть аудиогид"><i class="fas fa-headphones"></i></div>` : '';
+
+                exhibitElement.innerHTML = `
+                    <a href="${createExhibitLink(exhibit.id)}" class="exhibit-link" title="Отдельная ссылка"><i class="fas fa-link"></i></a>
+                    <div class="exhibit-img">
+                        <img src="${exhibit.image}" alt="${exhibit.name}" loading="lazy">
+                        ${audioIndicator}
+                        <div class="country-flag ${flagClass}">${flagText}</div>
+                    </div>
+                    <div class="exhibit-info">
+                        <h3>${exhibit.name}</h3>
+                        <div class="exhibit-specs">
+                            <div class="spec-item"><span class="spec-label">Класс:</span><span class="spec-value">${exhibit.class}</span></div>
+                            <div class="spec-item"><span class="spec-label">Скорость:</span><span class="spec-value">${exhibit.maxSpeed}</span></div>
+                            <div class="spec-item"><span class="spec-label">Дальность:</span><span class="spec-value">${exhibit.range}</span></div>
+                            <div class="spec-item"><span class="spec-label">Экипаж:</span><span class="spec-value">${exhibit.crew}</span></div>
+                        </div>
+                        <div class="exhibit-tags"><span class="tag ${flagClass}">${flagText}</span><span class="tag ${tagTypeClass}">${typeText}</span><span class="tag">${exhibit.crew}</span></div>
+                    </div>
+                `;
+                exhibitElement.addEventListener('click', (e) => { if (!e.target.closest('.exhibit-link')) openModal(exhibit); });
+                gallery.appendChild(exhibitElement);
+                generateExhibitQrCode(exhibitElement, exhibit.id);
+            });
+        }
+
+        // ===================== МОДАЛЬНОЕ ОКНО =====================
+        function createExhibitAudioPlayer(exhibitId, exhibitName) {
+            const hasAudio = exhibitAudioTexts[exhibitId];
+            return `<div class="exhibit-audio-player" data-exhibit-id="${exhibitId}">
+                <div class="audio-player-header"><h4><i class="fas fa-headphones"></i> Аудиогид: ${exhibitName}</h4></div>
+                ${hasAudio ? `<div class="exhibit-audio-controls"><button class="exhibit-audio-btn play-stop-btn"><i class="fas fa-play"></i></button><div class="exhibit-audio-progress"><div class="exhibit-audio-progress-bar"><div class="exhibit-audio-progress-fill"></div></div><div class="exhibit-audio-time"><span class="current-time">0:00</span> / <span class="total-time">0:30</span></div></div></div><p class="audio-note-small"><i class="fas fa-info-circle"></i> Краткое аудиоописание техники</p>` : `<p class="audio-note-small"><i class="fas fa-info-circle"></i> Аудиоописание временно недоступно</p>`}</div>`;
+        }
+        function initExhibitAudioPlayer(exhibitId) {
+            if (isExhibitAudioPlaying) { ttsManager.stop(); isExhibitAudioPlaying = false; }
+            if (currentExhibitAudioPlayer) { currentExhibitAudioPlayer.remove(); currentExhibitAudioPlayer = null; }
+            const player = document.querySelector(`.exhibit-audio-player[data-exhibit-id="${exhibitId}"]`);
+            if (!player) return;
+            currentExhibitAudioPlayer = player;
+            const playStopBtn = player.querySelector('.play-stop-btn');
+            const progressFill = player.querySelector('.exhibit-audio-progress-fill');
+            const progressBar = player.querySelector('.exhibit-audio-progress-bar');
+            const currentTimeEl = player.querySelector('.current-time');
+            const totalTimeEl = player.querySelector('.total-time');
+            if (!playStopBtn || !exhibitAudioTexts[exhibitId]) return;
+            let progressInterval = null, currentTime = 0;
+            const totalTime = 30;
+            function formatTime(seconds) { const mins = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${mins}:${secs < 10 ? '0' : ''}${secs}`; }
+            function updateProgress() { if (isExhibitAudioPlaying) { currentTime += 0.1; const progress = (currentTime / totalTime) * 100; if (progressFill) progressFill.style.width = `${Math.min(progress, 100)}%`; if (currentTimeEl) currentTimeEl.textContent = formatTime(currentTime); if (currentTime >= totalTime) stopAudio(); } }
+            function stopAudio() { ttsManager.stop(); isExhibitAudioPlaying = false; currentTime = 0; if (progressInterval) clearInterval(progressInterval); if (playStopBtn) playStopBtn.innerHTML = '<i class="fas fa-play"></i>'; if (progressFill) progressFill.style.width = '0%'; if (currentTimeEl) currentTimeEl.textContent = '0:00'; }
+            playStopBtn.addEventListener('click', () => {
+                if (!isExhibitAudioPlaying) {
+                    const text = exhibitAudioTexts[exhibitId];
+                    const success = ttsManager.speak(text, { rate: 1.5, onStart: () => { isExhibitAudioPlaying = true; playStopBtn.innerHTML = '<i class="fas fa-stop"></i>'; progressInterval = setInterval(updateProgress, 100); }, onEnd: stopAudio, onError: () => { alert('Не удалось воспроизвести аудио.'); stopAudio(); } });
+                    if (!success) alert('Ваш браузер не поддерживает синтез речи. Текстовое описание: ' + text);
+                } else stopAudio();
+            });
+            if (progressBar) progressBar.addEventListener('click', (e) => { const rect = progressBar.getBoundingClientRect(); const pos = (e.clientX - rect.left) / rect.width; currentTime = pos * totalTime; const progress = (currentTime / totalTime) * 100; if (progressFill) progressFill.style.width = `${progress}%`; if (currentTimeEl) currentTimeEl.textContent = formatTime(currentTime); });
+        }
+        function openModal(exhibit) {
+            if (ttsManager.isSpeaking) ttsManager.stop();
+            if (isExhibitAudioPlaying) { ttsManager.stop(); isExhibitAudioPlaying = false; }
+            modalTitle.textContent = exhibit.name;
+            modalImage.src = exhibit.image;
+            modalImage.alt = exhibit.name;
+            modalShareLink.href = createExhibitLink(exhibit.id);
+            modalSpecs.innerHTML = `<div class="spec-item"><span class="spec-label">Класс:</span><span class="spec-value">${exhibit.class}</span></div>${exhibit.type === 'aircraft' || exhibit.type === 'bomber' ? `<div class="spec-item"><span class="spec-label">Макс. высота:</span><span class="spec-value">${exhibit.maxAltitude}</span></div>` : ''}<div class="spec-item"><span class="spec-label">Макс. скорость:</span><span class="spec-value">${exhibit.maxSpeed}</span></div><div class="spec-item"><span class="spec-label">Дальность:</span><span class="spec-value">${exhibit.range}</span></div>${exhibit.type === 'aircraft' || exhibit.type === 'bomber' ? `<div class="spec-item"><span class="spec-label">Шасси:</span><span class="spec-value">${exhibit.landingGear}</span></div>` : ''}<div class="spec-item"><span class="spec-label">Экипаж:</span><span class="spec-value">${exhibit.crew}</span></div><div class="spec-item"><span class="spec-label">Вооружение:</span><span class="spec-value">${exhibit.armament}</span></div><div class="spec-item"><span class="spec-label">Конструктор:</span><span class="spec-value">${exhibit.designer}</span></div><div class="spec-item"><span class="spec-label">Период:</span><span class="spec-value">${exhibit.period}</span></div>`;
+            modalCrew.innerHTML = `<li><strong>Описание:</strong> ${exhibit.description}</li><li><strong>Конструктор:</strong> ${exhibit.designer}</li><li><strong>Известные герои:</strong> ${exhibit.pilots}</li>`;
+            modalCulture.innerHTML = `<li><strong>Упоминания в культуре:</strong> ${exhibit.culture}</li>`;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            history.pushState(null, '', `?id=${exhibit.id}`);
+            setTimeout(() => { const audioPlayerHTML = createExhibitAudioPlayer(exhibit.id, exhibit.name); modalCulture.insertAdjacentHTML('beforebegin', audioPlayerHTML); initExhibitAudioPlayer(exhibit.id); }, 100);
+        }
+        closeModal.addEventListener('click', () => { ttsManager.stop(); isExhibitAudioPlaying = false; modal.style.display = 'none'; document.body.style.overflow = 'auto'; history.pushState(null, '', window.location.pathname); });
+        modal.addEventListener('click', (e) => { if (e.target === modal) { ttsManager.stop(); isExhibitAudioPlaying = false; modal.style.display = 'none'; document.body.style.overflow = 'auto'; history.pushState(null, '', window.location.pathname); } });
+
+        // ===================== ОБРАБОТЧИКИ ФИЛЬТРОВ =====================
+        document.querySelectorAll('.filter-btn:not(.year-filter)').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.filter-btn:not(.year-filter)').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentCountryFilter = this.getAttribute('data-filter');
+                applyFilters();
+            });
+        });
+        document.querySelectorAll('.year-filter').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.year-filter').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentYearFilter = this.getAttribute('data-year');
+                applyFilters();
+            });
+        });
+        document.querySelectorAll('.filter-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const filter = this.getAttribute('data-filter');
+                document.querySelectorAll('.filter-btn:not(.year-filter)').forEach(btn => { btn.classList.remove('active'); if (btn.getAttribute('data-filter') === filter) btn.classList.add('active'); });
+                currentCountryFilter = filter;
+                applyFilters();
+                document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // ===================== ГЛАВНЫЙ АУДИОГИД =====================
+        const audioGuideBtn = document.getElementById('audioGuideBtn');
+        const audioControls = document.getElementById('audioControls');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const rewindBtn = document.getElementById('rewindBtn');
+        const forwardBtn = document.getElementById('forwardBtn');
+        const audioProgressBar = document.getElementById('audioProgressBar');
+        const audioProgress = document.getElementById('audioProgress');
+        const currentTimeElement = document.getElementById('currentTime');
+        const totalTimeElement = document.getElementById('totalTime');
+        const mainAudioText = "Добро пожаловать в наш школьный электронный музей 'Великая Отечественная война и СВО'. Наш музей был основан в 2005 году по инициативе учителей истории и группы увлеченных учеников...";
+        let isMainAudioPlaying = false, mainAudioProgress = 0, mainAudioInterval = null;
+        const mainAudioDuration = 60;
+        function formatTime(seconds) { const mins = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${mins}:${secs < 10 ? '0' : ''}${secs}`; }
+        function updateMainAudioProgress() { if (isMainAudioPlaying) { mainAudioProgress += 100 / (mainAudioDuration * 10); if (audioProgress) audioProgress.style.width = `${Math.min(mainAudioProgress, 100)}%`; if (currentTimeElement) currentTimeElement.textContent = formatTime((mainAudioProgress / 100) * mainAudioDuration); if (mainAudioProgress >= 100) stopMainAudio(); } }
+        function stopMainAudio() { ttsManager.stop(); isMainAudioPlaying = false; mainAudioProgress = 0; if (mainAudioInterval) clearInterval(mainAudioInterval); audioGuideBtn.classList.remove('playing'); audioGuideBtn.innerHTML = '<i class="fas fa-play"></i> Слушать аудиогид'; playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; if (audioProgress) audioProgress.style.width = '0%'; if (currentTimeElement) currentTimeElement.textContent = '0:00'; }
+        audioGuideBtn.addEventListener('click', () => {
+            if (!isMainAudioPlaying) {
+                const success = ttsManager.speak(mainAudioText, { rate: 0.9, onStart: () => { isMainAudioPlaying = true; audioGuideBtn.classList.add('playing'); audioGuideBtn.innerHTML = '<i class="fas fa-pause"></i> Аудиогид включен'; playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>'; audioControls.style.display = 'flex'; mainAudioInterval = setInterval(updateMainAudioProgress, 100); }, onEnd: stopMainAudio, onError: () => { alert('Не удалось воспроизвести аудиогид.'); stopMainAudio(); } });
+                if (!success) alert('Ваш браузер не поддерживает синтез речи.');
+            } else { ttsManager.pause(); isMainAudioPlaying = false; audioGuideBtn.classList.remove('playing'); audioGuideBtn.innerHTML = '<i class="fas fa-play"></i> Слушать аудиогид'; playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; if (mainAudioInterval) clearInterval(mainAudioInterval); }
+        });
+        playPauseBtn.addEventListener('click', () => { if (isMainAudioPlaying) { ttsManager.pause(); isMainAudioPlaying = false; playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; audioGuideBtn.classList.remove('playing'); audioGuideBtn.innerHTML = '<i class="fas fa-play"></i> Слушать аудиогид'; if (mainAudioInterval) clearInterval(mainAudioInterval); } else { ttsManager.resume(); isMainAudioPlaying = true; playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>'; audioGuideBtn.classList.add('playing'); audioGuideBtn.innerHTML = '<i class="fas fa-pause"></i> Аудиогид включен'; mainAudioInterval = setInterval(updateMainAudioProgress, 100); } });
+        rewindBtn.addEventListener('click', () => { mainAudioProgress = Math.max(0, mainAudioProgress - (10 / mainAudioDuration) * 100); updateMainAudioProgress(); });
+        forwardBtn.addEventListener('click', () => { mainAudioProgress = Math.min(100, mainAudioProgress + (10 / mainAudioDuration) * 100); updateMainAudioProgress(); });
+        audioProgressBar.addEventListener('click', (e) => { const rect = audioProgressBar.getBoundingClientRect(); const pos = (e.clientX - rect.left) / rect.width; mainAudioProgress = pos * 100; updateMainAudioProgress(); });
+        totalTimeElement.textContent = formatTime(mainAudioDuration);
+
+        // ===================== ПЛАВНАЯ ПРОКРУТКА И ИНИЦИАЛИЗАЦИЯ =====================
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) { e.preventDefault(); const targetId = this.getAttribute('href'); const targetElement = document.querySelector(targetId); window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' }); document.querySelectorAll('nav a').forEach(link => link.classList.remove('active')); this.classList.add('active'); });
+        });
+        window.addEventListener('scroll', function () { let current = ''; document.querySelectorAll('section').forEach(section => { const sectionTop = section.offsetTop; if (scrollY >= (sectionTop - 100)) current = section.getAttribute('id'); }); document.querySelectorAll('nav a').forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === `#${current}`) link.classList.add('active'); }); });
+        document.addEventListener('DOMContentLoaded', function () {
+            createGallery();
+            function getUrlParameter(name) { const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'); const results = regex.exec(window.location.href); return results ? decodeURIComponent(results[2]?.replace(/\+/g, ' ') || '') : null; }
+            const exhibitId = getUrlParameter('id');
+            if (exhibitId) { const exhibit = exhibitsData.find(item => item.id == exhibitId); if (exhibit) { setTimeout(() => { document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' }); setTimeout(() => openModal(exhibit), 500); }, 100); } }
+            document.querySelectorAll('.exhibit-img img').forEach(img => { img.addEventListener('error', function () { const parent = this.parentElement; if (parent) { const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="#8B0000"/><text x="200" y="140" font-family="Arial" font-size="24" fill="white" text-anchor="middle">${this.alt}</text><text x="200" y="180" font-family="Arial" font-size="16" fill="#D4AF37" text-anchor="middle">Изображение временно недоступно</text></svg>`; this.src = 'data:image/svg+xml;base64,' + btoa(svg); } }); });
+        });
+    </script>
+</body>
+</html>
